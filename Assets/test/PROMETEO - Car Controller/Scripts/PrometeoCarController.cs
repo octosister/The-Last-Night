@@ -67,6 +67,7 @@ public class PrometeoCarController : MonoBehaviour
       public GameObject rearRightMesh;
       public WheelCollider rearRightCollider;
 
+      public GameObject SteeringWheel;
     //PARTICLE SYSTEMS
 
       [Space(20)]
@@ -394,7 +395,7 @@ public class PrometeoCarController : MonoBehaviour
       if(useSounds){
         try{
           if(carEngineSound != null){
-            float engineSoundPitch = initialCarEngineSoundPitch + (Mathf.Abs(carRigidbody.velocity.magnitude) / 25f);
+            float engineSoundPitch = initialCarEngineSoundPitch + (Mathf.Abs(carRigidbody.velocity.magnitude) / 50f);
             carEngineSound.pitch = engineSoundPitch;
           }
           if((isDrifting) || (isTractionLocked && Mathf.Abs(carSpeed) > 12f)){
