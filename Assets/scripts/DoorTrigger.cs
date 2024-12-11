@@ -4,11 +4,24 @@ public class DoorTrigger : MonoBehaviour
 {
     public DoorController doorController;
 
-    void OnTriggerStay(Collider other)
+    bool doorOpened = false;
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)) 
+    
+
+    
+        if (other.CompareTag("Player"))
+     {
+            if(doorOpened!=true)
         {
-            doorController.ToggleDoor();
+            if (doorController.IsOpen()) 
+            {
+                doorController.CloseDoor();
+                doorOpened = true;
+            }
         }
     }
+
+
+}
 }
