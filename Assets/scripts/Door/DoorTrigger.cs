@@ -18,6 +18,7 @@ public class DoorTrigger : MonoBehaviour
             {
                 doorController.CloseDoor();
                 doorOpened = true;
+                doorController.LockDoor();
             }
         }
     }

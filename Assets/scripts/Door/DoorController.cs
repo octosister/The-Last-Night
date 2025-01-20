@@ -8,8 +8,9 @@ public class DoorController : MonoBehaviour
     public AudioClip openSound;
     public AudioClip closeSound;
     public AudioClip lockedSound;
-    public bool wasOpened = false;
+    
 
+    public bool locked = false;
     private bool isOpen = false;
     private bool lockedSoundCooldown = false;
     private float lockedSoundCooldownDuration = 1f;
@@ -47,6 +48,8 @@ public class DoorController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, closedRotation, Time.deltaTime * openSpeed);
         }
 
+        
+
         CheckForInteraction();
     }
 
@@ -54,12 +57,12 @@ public class DoorController : MonoBehaviour
     {
         if (player != null && Vector3.Distance(player.position, transform.position) <= interactionDistance)
         {
-            if (Input.GetKeyDown(KeyCode.E) && !wasOpened)
+            if (Input.GetKeyDown(KeyCode.E) &&!locked)
             {
                 ToggleDoor();
-                wasOpened = true;
+                
             }
-            else if (Input.GetKeyDown(KeyCode.E) && wasOpened)
+            else if (Input.GetKeyDown(KeyCode.E) && locked)
             {
                 if (!lockedSoundCooldown && lockedSound != null)
                 {
@@ -105,4 +108,11 @@ public class DoorController : MonoBehaviour
     {
         return isOpen;
     }
+
+    public void LockDoor()
+    {
+    locked = true;
+
+    }
+
 }

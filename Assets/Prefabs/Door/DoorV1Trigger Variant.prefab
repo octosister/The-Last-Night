@@ -199,11 +199,11 @@ PrefabInstance:
     - target: {fileID: 2561025787746094674, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
       propertyPath: openSound
       value: 
-      objectReference: {fileID: 8300000, guid: aa581742215fa8a4b853ee975a49ef4c, type: 3}
+      objectReference: {fileID: 8300000, guid: 838f2c8dd9d8737479c350d471d7dae0, type: 3}
     - target: {fileID: 2561025787746094674, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
       propertyPath: closeSound
       value: 
-      objectReference: {fileID: 8300000, guid: d16707546a9c5d54d9dab32fdeef4196, type: 3}
+      objectReference: {fileID: 8300000, guid: 11a07b478e641fd4f98748117c0e21be, type: 3}
     - target: {fileID: 6394782986314312851, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
       propertyPath: m_Name
       value: DoorV1Trigger Variant
