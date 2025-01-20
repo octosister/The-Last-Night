@@ -7,8 +7,12 @@ public class DoorController : MonoBehaviour
     public float interactionDistance = 3f;
     public AudioClip openSound;
     public AudioClip closeSound;
+    public AudioClip lockedSound;
+    public bool wasOpened = false;
 
     private bool isOpen = false;
+    private bool lockedSoundCooldown = false;
+    private float lockedSoundCooldownDuration = 1f;
     private Quaternion closedRotation;
     private Quaternion openRotation;
     private Transform player;
@@ -19,7 +23,7 @@ public class DoorController : MonoBehaviour
         closedRotation = transform.rotation;
         openRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, openAngle, 0));
 
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
             Debug.LogError("Player not found! Ensure your player object has the 'Player' tag.");
@@ -50,11 +54,26 @@ public class DoorController : MonoBehaviour
     {
         if (player != null && Vector3.Distance(player.position, transform.position) <= interactionDistance)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !wasOpened)
             {
                 ToggleDoor();
+                wasOpened = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && wasOpened)
+            {
+                if (!lockedSoundCooldown && lockedSound != null)
+                {
+                    audioSource.PlayOneShot(lockedSound);
+                    lockedSoundCooldown = true;
+                    Invoke(nameof(ResetLockedSoundCooldown), lockedSoundCooldownDuration);
+                }
             }
         }
+    }
+
+    void ResetLockedSoundCooldown()
+    {
+        lockedSoundCooldown = false;
     }
 
     public void ToggleDoor()
@@ -71,20 +90,16 @@ public class DoorController : MonoBehaviour
             audioSource.PlayOneShot(closeSound);
         }
     }
-    public void CloseDoor()
-{
-    if (isOpen)
-    {
-        isOpen = false;
-        Debug.Log("Door closed.");
 
-        if (closeSound != null)
+    public void CloseDoor()
+    {
+        if (isOpen)
         {
+            isOpen = false;
+            Debug.Log("Door closed.");
             audioSource.PlayOneShot(closeSound);
         }
     }
-}
-
 
     public bool IsOpen()
     {
