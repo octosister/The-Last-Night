@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class start : MonoBehaviour
 {
-    public string sceneName = "Game"; // Название сцены, которую нужно открыть
+    public string sceneName = "Game";
 
     private void Start()
     {
-        // Проверяем, есть ли компонент Text или Button на объекте
+        
         Text textComponent = GetComponent<Text>();
         if (textComponent == null)
         {
@@ -18,7 +18,7 @@ public class start : MonoBehaviour
         }
         else
         {
-            // Добавляем обработчик клика
+            
             Button button = gameObject.AddComponent<Button>();
             button.onClick.AddListener(OnTextClick);
         }
@@ -26,7 +26,7 @@ public class start : MonoBehaviour
 
     private void OnTextClick()
     {
-        // Загружаем указанную сцену
+        
         SceneManager.LoadScene(sceneName);
     }
 }
