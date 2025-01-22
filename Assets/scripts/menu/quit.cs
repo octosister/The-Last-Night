@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class quit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Text textComponent = GetComponent<Text>();
+        if (textComponent == null)
+        {
+            Debug.LogError("Объект не содержит компонента Text. Пожалуйста, добавьте его.");
+        }
+        else
     {
-        
+        // Добавляем обработчик клика
+        Button button = gameObject.AddComponent<Button>();
+        button.onClick.AddListener(OnTextClick);
     }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private void OnTextClick()
+{
+    // Завершаем игру
+    Debug.Log("Выход из игры");
+    Application.Quit(); 
+}
 }
