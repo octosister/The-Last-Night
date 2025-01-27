@@ -14,6 +14,7 @@ public class CarExitTrigger : MonoBehaviour
     private bool isCarInside = false; // Is the car inside the trigger
     private bool isCarStopped = false; // Is the car stopped
     private bool isFading = false; // Is the screen fading
+    private bool exitedFromCar = false;
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class CarExitTrigger : MonoBehaviour
     void Update()
     {
         // Check if the player can exit the car and listen for the E key
-        if (isCarInside && isCarStopped && !isFading && Input.GetKeyDown(KeyCode.E))
+        if (isCarInside && isCarStopped && !isFading && Input.GetKeyDown(KeyCode.E)&&exitedFromCar==false)
         {
             StartCoroutine(FadeTransition());
         }
@@ -128,6 +129,7 @@ public class CarExitTrigger : MonoBehaviour
         }
 
         isFading = false;
+        exitedFromCar = true;
     }
 
     // Helper method to check if the collider is part of the car
