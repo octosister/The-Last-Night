@@ -270,7 +270,7 @@ MonoBehaviour:
   openAngle: 90
   openSpeed: 2
   interactionDistance: 3
-  openSound: {fileID: 8300000, guid: 838f2c8dd9d8737479c350d471d7dae0, type: 3}
+  openSound: {fileID: 8300000, guid: cfd8327f4fdba8e449aed0456d06ab4a, type: 3}
   closeSound: {fileID: 8300000, guid: 11a07b478e641fd4f98748117c0e21be, type: 3}
   lockedSound: {fileID: 8300000, guid: f9507b2fed858f9459492738403e3903, type: 3}
   locked: 0
