@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // Import TextMeshPro namespace
+using TMPro;
+using Unity.VisualScripting; // Import TextMeshPro namespace
 
 public class CarExitTrigger : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class CarExitTrigger : MonoBehaviour
     private bool isCarStopped = false; // Is the car stopped
     private bool isFading = false; // Is the screen fading
     private bool exitedFromCar = false;
+    public GameObject carStatic;
 
     void Start()
     {
@@ -58,7 +60,7 @@ public class CarExitTrigger : MonoBehaviour
                 // Show the prompt
                 if (exitPrompt != null)
                 {
-                    exitPrompt.text = "Press E to exit the car";
+                    exitPrompt.text = "Press E to exit";
                 }
             }
             else
@@ -94,12 +96,6 @@ public class CarExitTrigger : MonoBehaviour
     {
         isFading = true;
 
-        // Hide the prompt before transitioning
-        if (exitPrompt != null)
-        {
-            exitPrompt.text = "";
-        }
-
         // Fade to black
         for (float t = 0; t < 1; t += Time.deltaTime)
         {
@@ -122,14 +118,9 @@ public class CarExitTrigger : MonoBehaviour
         }
         fadeCanvas.alpha = 0;
 
-        // Ensure prompt stays hidden after fade
-        if (exitPrompt != null)
-        {
-            exitPrompt.text = ""; // Clear text
-        }
-
         isFading = false;
         exitedFromCar = true;
+        carStatic.SetActive(true);
     }
 
     // Helper method to check if the collider is part of the car
