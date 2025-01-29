@@ -107,7 +107,7 @@ public class CarExitTrigger : MonoBehaviour
 
         // Transition player
         player.SetActive(true);
-        player.transform.position = carRoot.transform.position + new Vector3(2, 0, 0); // Offset for player spawn
+        player.transform.position = carRoot.transform.position + new Vector3(2, 1, 1); // Offset for player spawn
         carRoot.SetActive(false);
 
         // Fade back in

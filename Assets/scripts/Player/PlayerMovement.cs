@@ -1,57 +1,75 @@
-using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float defaultWalkSpeed;
-    private float sprintSpeedMultiplier = 1.5f;
-    public float maxVelocity = 10f;
-    public float forceMultiplier = 100f;
+    public float speed = 5f; // Movement speed
+    public float groundCheckDistance = 0.1f; // Distance to check for ground
+    public LayerMask groundLayer; // Layer mask for ground objects
 
-    [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public Vector3 moveDir;
-    public Transform orientation;
+    private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
 
-    private float walkSpeed;
-    
-    private void Start()
+    void Start()
     {
+        // Get the Rigidbody and CapsuleCollider components
         rb = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
+        if (rb == null || capsuleCollider == null)
+        {
+            Debug.LogError("Rigidbody or CapsuleCollider component not found on the player!");
+        }
+
+        // Freeze rotation to prevent unwanted tilting
         rb.freezeRotation = true;
-        walkSpeed = defaultWalkSpeed;
     }
 
-    private void FixedUpdate()
+    void Update()
     {
-        HandleMovement();
-        CapMaxVelocity();
+        // Get input from the player
+        float moveHorizontal = Input.GetAxis("Horizontal"); // A/D or Left/Right Arrow
+        float moveVertical = Input.GetAxis("Vertical");     // W/S or Up/Down Arrow
+
+        // Calculate movement direction relative to the player's orientation
+        Vector3 movement = transform.right * moveHorizontal + transform.forward * moveVertical;
+
+        // Normalize the movement vector to prevent faster diagonal movement
+        if (movement.magnitude > 1f)
+        {
+            movement.Normalize();
+        }
+
+        // Apply movement to the Rigidbody
+        MovePlayer(movement);
     }
 
-    void HandleMovement()
+    void MovePlayer(Vector3 movement)
     {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            walkSpeed = defaultWalkSpeed * sprintSpeedMultiplier;
-        }
-        else
-        {
-            walkSpeed = defaultWalkSpeed;
-        }
+        // Check if the player is grounded
+        bool isGrounded = IsGrounded();
 
-        moveDir = (orientation.right * Input.GetAxisRaw("Horizontal") + orientation.forward * Input.GetAxisRaw("Vertical")).normalized;
+        if (isGrounded)
+        {
+            // Calculate the target velocity
+            Vector3 targetVelocity = movement * speed;
 
-        rb.AddForce(moveDir * walkSpeed * forceMultiplier * Time.fixedDeltaTime, ForceMode.Acceleration);
+            // Apply the movement force to the Rigidbody
+            rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
+        }
     }
 
-    void CapMaxVelocity()
+    bool IsGrounded()
     {
-        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        // Perform a raycast to check if the player is on the ground
+        RaycastHit hit;
+        Vector3 rayStart = transform.position + capsuleCollider.center;
+        float rayLength = capsuleCollider.height / 2 + groundCheckDistance;
 
-        if (flatVelocity.magnitude > maxVelocity)
+        if (Physics.Raycast(rayStart, Vector3.down, out hit, rayLength, groundLayer))
         {
-            Vector3 limitedVelocity = flatVelocity.normalized * maxVelocity;
-            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+            return true;
         }
+
+        return false;
     }
 }
