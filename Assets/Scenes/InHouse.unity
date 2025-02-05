@@ -369,6 +369,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8366271128281546968, guid: da3803b5412d8df49acb7a7a460d7099, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -380,11 +384,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1936721432}
   m_SourcePrefab: {fileID: 100100000, guid: da3803b5412d8df49acb7a7a460d7099, type: 3}
-<<<<<<< Updated upstream
 --- !u!1001 &682161065
-=======
---- !u!1001 &1581704998434220518
->>>>>>> Stashed changes
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -392,7 +392,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< Updated upstream
     - target: {fileID: 154186652405679857, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
       propertyPath: m_LocalPosition.x
       value: -238.689
@@ -436,57 +435,11 @@ PrefabInstance:
     - target: {fileID: 6394782986314312851, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
       propertyPath: m_Name
       value: DoorV1 (5)
-=======
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -286.78265
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.33918
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -611.64465
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 152411313965211252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9116669553208955252, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
-      propertyPath: m_Name
-      value: Abandoned_House
->>>>>>> Stashed changes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-<<<<<<< Updated upstream
   m_SourcePrefab: {fileID: 100100000, guid: 6cffc25a18fdc3944b075116c661ac28, type: 3}
 --- !u!1001 &756069679
 PrefabInstance:
@@ -938,7 +891,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 011ad2b29f529c74489d59d14750606b, type: 3}
---- !u!1 &1332255828
+--- !u!1 &1331430784
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -946,38 +899,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1332255829}
-  - component: {fileID: 1332255830}
-  m_Layer: 0
+  - component: {fileID: 1331430785}
+  - component: {fileID: 1331430786}
+  m_Layer: 7
   m_Name: StairCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1332255829
+--- !u!4 &1331430785
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332255828}
+  m_GameObject: {fileID: 1331430784}
   serializedVersion: 2
   m_LocalRotation: {x: 0.22436826, y: -0.6705661, z: 0.22436826, w: 0.6705661}
   m_LocalPosition: {x: 29.45166, y: 0.44982004, z: -126.635376}
   m_LocalScale: {x: 1.8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 572946485}
+  m_Children: []
   m_Father: {fileID: 2329572052807975185}
   m_LocalEulerAnglesHint: {x: 37, y: -90, z: 0}
---- !u!65 &1332255830
+--- !u!65 &1331430786
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332255828}
+  m_GameObject: {fileID: 1331430784}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -17499,7 +17451,7 @@ Transform:
   - {fileID: 6296236853313455521}
   - {fileID: 1148473015644189899}
   - {fileID: 4075624554241606717}
-  - {fileID: 1332255829}
+  - {fileID: 1331430785}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2329859056141756503
@@ -77548,15 +77500,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4082835338454928073, guid: e03c8b08ed331ca4ba73dc74f4d5e66b, type: 3}
-=======
-  m_SourcePrefab: {fileID: 100100000, guid: baf975b5b22274c4aa3226ba62d4873f, type: 3}
->>>>>>> Stashed changes
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 373277795}
-  - {fileID: 1581704998434220518}
   - {fileID: 639354903}
   - {fileID: 826176617}
   - {fileID: 1718325594}
@@ -77574,3 +77522,4 @@ SceneRoots:
   - {fileID: 203126783}
   - {fileID: 1616240727}
   - {fileID: 756069679}
+  - {fileID: 2329572052807975185}
