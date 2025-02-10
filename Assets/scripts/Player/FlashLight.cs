@@ -1,43 +1,66 @@
 using UnityEngine;
 
-public class FlashlightController : MonoBehaviour
+public class Flashlight : MonoBehaviour
 {
-    public Light flashlight;
+    [Header("Flashlight Settings")]
+    public Light flashlight; // The spotlight component
+    public float maxBrightness = 5f; // Brightness when far away
+    public float minBrightness = 1f; // Brightness when very close
+    public float maxDistance = 20f; // Max distance to consider for brightness adjustment
     public Camera playerCamera;
-    private bool isFlashlightOn = false;
-    private bool hasFlashlight = false;
+    [Header("Input Key")]
+    public KeyCode toggleKey = KeyCode.F;
+    private bool isOn = false; // Flashlight state
+    private float targetBrightness; // The target intensity value
+    private float smoothSpeed = 5f; // Speed of brightness smoothing
+
+    void Start()
+    {
+        if (flashlight == null)
+        {
+            flashlight = GetComponent<Light>();
+        }
+    }
 
     void Update()
     {
-        if (hasFlashlight && Input.GetKeyDown(KeyCode.F))
-        {
-            ToggleFlashlight();
-        }
-
-        if (isFlashlightOn)
-        {
-            UpdateFlashlightPosition();
-        }
+        HandleFlashlightToggle();
+        AdjustBrightness();
+        UpdateFlashlightPosition();
     }
 
-    void ToggleFlashlight()
+    private void HandleFlashlightToggle()
     {
-        isFlashlightOn = !isFlashlightOn;
-        flashlight.enabled = isFlashlightOn;
+        if (Input.GetKeyDown(toggleKey))
+        {
+            isOn = !isOn;
+            flashlight.enabled = isOn;
+        }
     }
 
-    void UpdateFlashlightPosition()
+    private void AdjustBrightness()
+    {
+        if (!isOn) return;
+
+        RaycastHit hit;
+        float distance = maxDistance;
+
+        // Check if something is directly in front of the flashlight
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, maxDistance))
+        {
+            distance = hit.distance; // Use the distance to the object
+        }
+
+        // Calculate the target intensity based on the distance
+        targetBrightness = Mathf.Lerp(minBrightness, maxBrightness, distance / maxDistance);
+
+        // Smoothly transition the flashlight intensity to the target value
+        flashlight.intensity = Mathf.Lerp(flashlight.intensity, targetBrightness, smoothSpeed * Time.deltaTime);
+    }
+
+    private void UpdateFlashlightPosition()
     {
         flashlight.transform.position = playerCamera.transform.position;
         flashlight.transform.rotation = playerCamera.transform.rotation;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("FlashlightPickup"))
-        {
-            hasFlashlight = true;
-            Destroy(other.gameObject);
-        }
     }
 }
