@@ -10,13 +10,13 @@ public class CarExitTrigger : MonoBehaviour
     public GameObject carRoot; // Root object of the car (with Rigidbody)
     public CanvasGroup fadeCanvas; // Canvas for fade effect
     public TextMeshProUGUI exitPrompt; // TMP Text for "Press E to exit the car"
-
     private Rigidbody carRigidbody; // Reference to the car's Rigidbody
     private bool isCarInside = false; // Is the car inside the trigger
     private bool isCarStopped = false; // Is the car stopped
     private bool isFading = false; // Is the screen fading
     private bool exitedFromCar = false;
     public GameObject carStatic;
+    public GameObject mapBorder;
 
     void Start()
     {
@@ -109,6 +109,7 @@ public class CarExitTrigger : MonoBehaviour
         player.SetActive(true);
         player.transform.position = carRoot.transform.position + new Vector3(2, 1, 1); // Offset for player spawn
         carRoot.SetActive(false);
+        carStatic.SetActive(true);
 
         // Fade back in
         for (float t = 1; t > 0; t -= Time.deltaTime)
@@ -120,7 +121,7 @@ public class CarExitTrigger : MonoBehaviour
 
         isFading = false;
         exitedFromCar = true;
-        carStatic.SetActive(true);
+        mapBorder.SetActive(true);
     }
 
     // Helper method to check if the collider is part of the car
