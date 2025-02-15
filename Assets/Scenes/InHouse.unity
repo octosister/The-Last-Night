@@ -344,7 +344,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &530914805
 CapsuleCollider:
@@ -468,15 +468,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59f59519d066934dabe398a118ead57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  sightRange: 10
+  player: {fileID: 1164055986}
+  wanderSpeed: 2
   chaseSpeed: 3.5
-  patrolSpeed: 2
-  patrolPoints:
-  - {fileID: 534281996}
-  - {fileID: 1245007136}
-  - {fileID: 1280615555}
-  - {fileID: 1612081613}
+  chaseRange: 10
+  catchRange: 1
 --- !u!1 &534281995
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,16 +845,28 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -259.83688
+      value: -260.531
       objectReference: {fileID: 0}
     - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.6
+      value: 5.8518
       objectReference: {fileID: 0}
     - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -728.5564
+      value: -732.034
       objectReference: {fileID: 0}
     - target: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1076,6 +1084,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 011ad2b29f529c74489d59d14750606b, type: 3}
+--- !u!4 &1164055986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8330373349381208745, guid: 3b524bdc9f2a1464ca161c3356bc7207, type: 3}
+  m_PrefabInstance: {fileID: 852474583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1245007135
 GameObject:
   m_ObjectHideFlags: 0

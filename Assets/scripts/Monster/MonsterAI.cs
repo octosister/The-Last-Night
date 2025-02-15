@@ -1,68 +1,63 @@
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class EnemyAI : MonoBehaviour
 {
     public Transform player;
-    public float sightRange = 10f;
-    public float chaseSpeed = 3.5f;
-    public float patrolSpeed = 2f;
-    public Transform[] patrolPoints;
+    public float wanderSpeed = 2f;
+    public float chaseSpeed = 4f;
+    public float chaseRange = 10f;
+    public float catchRange = 1f;
 
-    private NavMeshAgent agent;
-    private int currentPatrolIndex = 0;
+    private Vector3 wanderPoint;
+    private bool isChasing = false;
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = patrolSpeed;
-        GoToNextPatrolPoint();
+        wanderPoint = GetRandomPoint();
     }
 
     void Update()
     {
-        if (CanSeePlayer())
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer < catchRange)
         {
-            agent.speed = chaseSpeed;
-            agent.SetDestination(player.position);
+            PlayerCaught();
+        }
+        else if (distanceToPlayer < chaseRange)
+        {
+            ChasePlayer();
         }
         else
         {
-            agent.speed = patrolSpeed;
-            Patrol();
+            Wander();
         }
     }
 
-    bool CanSeePlayer()
+    void Wander()
     {
-        if (Vector3.Distance(transform.position, player.position) <= sightRange)
+        if (Vector3.Distance(transform.position, wanderPoint) < 1f)
         {
-            RaycastHit hit;
-            if (Physics.Linecast(transform.position, player.position, out hit))
-            {
-                if (hit.transform == player)
-                {
-                    return true;
-                }
-            }
+            wanderPoint = GetRandomPoint();
         }
-        return false;
+
+        transform.position = Vector3.MoveTowards(transform.position, wanderPoint, wanderSpeed * Time.deltaTime);
     }
 
-    void Patrol()
+    void ChasePlayer()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            GoToNextPatrolPoint();
-        }
+        transform.position = Vector3.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
     }
 
-    void GoToNextPatrolPoint()
+    void PlayerCaught()
     {
-        if (patrolPoints.Length == 0)
-            return;
+        // Prechod do scény MainMenu
+        SceneManager.LoadScene("MainMenu");
+    }
 
-        agent.destination = patrolPoints[currentPatrolIndex].position;
-        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+    Vector3 GetRandomPoint()
+    {
+        return new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
     }
 }
