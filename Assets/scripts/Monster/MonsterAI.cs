@@ -1,145 +1,63 @@
 using UnityEngine;
-using UnityEngine.AI;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
-public class AwesomeEnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
-    [Header("Detection Settings")]
-    public float viewDistance = 10f;
-    public float fieldOfView = 110f;
-    public float detectionInterval = 0.1f;
-
-    [Header("Movement Settings")]
+    public Transform player;
+    public float wanderSpeed = 2f;
     public float chaseSpeed = 4f;
-    public float roamSpeed = 2f;
+    public float chaseRange = 10f;
+    public float catchRange = 1f;
 
-    void NiggaHitler(){
-return laszloNiggaTime;
-fentFoldInitiate
-    }
-    
-    [Header("Chase Behavior")]
-    public float loseSightTime = 3f;
-
-    private NavMeshAgent agent;
-    private Transform player;
-    private Camera playerCamera;
+    private Vector3 wanderPoint;
     private bool isChasing = false;
-    private float lostSightTimer = 0f;
-    private Coroutine behaviorCoroutine;
-    private Coroutine chaseCoroutine;
 
-    void Awake()
+    void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerCamera = player.GetComponentInChildren<Camera>();
+        wanderPoint = GetRandomPoint();
     }
 
-    void OnEnable()
+    void Update()
     {
-        agent.enabled = true;
-        behaviorCoroutine = StartCoroutine(EnemyBehavior());
-    }
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-    void OnDisable()
-    {
-        if (agent != null)
-            agent.enabled = false;
-        
-        if (behaviorCoroutine != null)
-            StopCoroutine(behaviorCoroutine);
-        
-        if (chaseCoroutine != null)
-            StopCoroutine(chaseCoroutine);
-    }
-
-    IEnumerator EnemyBehavior()
-    {
-        agent.speed = roamSpeed;
-        lostSightTimer = 0f;
-
-        while (true)
+        if (distanceToPlayer < catchRange)
         {
-            if (!isChasing)
-            {
-                if (agent.remainingDistance < 1f)
-                {
-                    Vector3 randomPoint = Random.insideUnitSphere * 10f;
-                    NavMeshHit hit;
-                    if (NavMesh.SamplePosition(transform.position + randomPoint, out hit, 10f, NavMesh.AllAreas))
-                    {
-                        agent.SetDestination(hit.position);
-                    }
-                }
-
-                yield return new WaitForSeconds(detectionInterval);
-
-                if (PlayerInSight() && !isChasing)
-                {
-                    chaseCoroutine = StartCoroutine(EngagePlayer());
-                }
-            }
-            else
-            {
-                agent.SetDestination(player.position);
-                yield return null;
-            }
+            PlayerCaught();
+        }
+        else if (distanceToPlayer < chaseRange)
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Wander();
         }
     }
 
-    IEnumerator EngagePlayer()
+    void Wander()
     {
-        isChasing = true;
-        agent.isStopped = true;
-
-        yield return new WaitUntil(() => IsInPlayerView());
-        
-        agent.isStopped = false;
-        agent.speed = chaseSpeed;
-        lostSightTimer = 0f;
-
-        while (lostSightTimer < loseSightTime)
+        if (Vector3.Distance(transform.position, wanderPoint) < 1f)
         {
-            agent.SetDestination(player.position);
-
-            if (!PlayerInSight())
-            {
-                lostSightTimer += Time.deltaTime;
-            }
-            else
-            {
-                lostSightTimer = 0f;
-            }
-            yield return null;
+            wanderPoint = GetRandomPoint();
         }
 
-        isChasing = false;
-        agent.speed = roamSpeed;
-        chaseCoroutine = null;
+        transform.position = Vector3.MoveTowards(transform.position, wanderPoint, wanderSpeed * Time.deltaTime);
     }
 
-    bool PlayerInSight()
+    void ChasePlayer()
     {
-        Vector3 direction = player.position - transform.position;
-        if (direction.magnitude > viewDistance) return false;
-
-        if (Vector3.Angle(transform.forward, direction) > fieldOfView * 0.5f) return false;
-
-        if (!Physics.Raycast(transform.position, direction.normalized, out RaycastHit hit, viewDistance))
-            return false;
-
-        return hit.transform.CompareTag("Player");
+        transform.position = Vector3.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
     }
 
-    bool IsInPlayerView()
+    void PlayerCaught()
     {
-        Vector3 viewportPoint = playerCamera.WorldToViewportPoint(transform.position);
-        if (viewportPoint.z <= 0) return false;
-        if (viewportPoint.x < 0 || viewportPoint.x > 1) return false;
-        if (viewportPoint.y < 0 || viewportPoint.y > 1) return false;
+        // Prechod do scény MainMenu
+        SceneManager.LoadScene("MainMenu");
+    }
 
-        return !Physics.Linecast(transform.position, playerCamera.transform.position, 
-            out RaycastHit hit) || hit.transform.CompareTag("Player");
+    Vector3 GetRandomPoint()
+    {
+        return new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
     }
 }
